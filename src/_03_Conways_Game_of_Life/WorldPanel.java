@@ -23,13 +23,13 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	
 	
 	public WorldPanel(int w, int h, int cpr) {
-		setPreferredSize(new Dimension(w, h));
+		//2. Calculate the cell size.
+		cellSize = w/cpr;
+		
+		setPreferredSize(new Dimension(w - cellSize, h - cellSize));
 		addMouseListener(this);
 		timer = new Timer(500, this);
 		this.cellsPerRow = cpr;
-	
-		//2. Calculate the cell size.
-		cellSize = w/cpr;
 		
 		//3. Initialize the cell array to the appropriate size.
 		cellArr = new Cell[w/cellSize][h/cellSize];
@@ -42,7 +42,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 				cellArr[i][j] = new Cell(i*cellSize, j*cellSize, cellSize);
 			}
 		}
-		
 	}
 	
 	public void randomizeCells() {
@@ -80,7 +79,10 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	}
 	
 	@Override
-	public void paintComponent(Graphics g) {		
+	public void paintComponent(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
 		//6. Iterate through the cells and draw them all
 		for(int i=0; i<cellArr.length; i++) {
 			for(int j=0; j<cellArr[0].length; j++) {
@@ -90,7 +92,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		// draws grid
 		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+		g.drawRect(0, 0, getWidth(), getHeight());
 	}
 	
 	//advances world one step
@@ -118,15 +120,15 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
 		int numLivingNeighbors = 0;
-		/*
 		for(int i=x-1; i<x+2; i++) {
 			for(int j=y-1; j<y+2; j++) {
-				if(i>0 && i<cellArr[0].length && i!=x && j>0 && j<cellArr.length && j!=y) {
-					numLivingNeighbors++;
+				if(i>-1 && j>-1 && i<cellArr[0].length && j<cellArr.length && (i!=x || j!=y)) {
+					if(cellArr[i][j].isAlive) {
+						numLivingNeighbors++;
+					}
 				}
 			}
 		}
-		*/
 		return numLivingNeighbors;
 	}
 

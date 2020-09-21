@@ -14,9 +14,9 @@ import javax.swing.JTextField;
 public class ConwaysGameOfLife extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	
-	public static final int WIDTH = 500;
-	public static final int HEIGHT = 500;
-	public static final int CELLS_PER_ROW = 50;
+	public static final int WIDTH = 1200;
+	public static final int HEIGHT = 1200;
+	public static final int CELLS_PER_ROW = 300;
 	
 	private JFrame window;
 	private JPanel inputPanel;
@@ -62,7 +62,7 @@ public class ConwaysGameOfLife extends JPanel implements ActionListener{
 		add(gamePanel, BorderLayout.CENTER);
 		
 		window.pack();
-		window.setResizable(true);
+		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
 	}
@@ -94,6 +94,4 @@ public class ConwaysGameOfLife extends JPanel implements ActionListener{
 			gamePanel.clearCells();
 		}
 	}
-	
-	//WINDOW NEEDS TO SOMEHOW GET REPAINTED
 }
